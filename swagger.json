@@ -1,0 +1,385 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "",
+    "version": "1.0.0",
+    "title": "Web-Engineering I Projekt 1 - REST documentation"
+  },
+  "tags": [
+    {
+      "name": "data"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/data/aktien": {
+      "get": {
+        "tags": [
+          "data"
+        ],
+        "summary": "Gibt alle Aktien zurück",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Aktie"
+            }
+          }
+        }
+      }
+    },
+    "/data/benutzerdaten": {
+      "get": {
+        "tags": [
+          "data"
+        ],
+        "summary": "Benutzerinformation",
+        "description": "Gibt Name und Kontostand des aktuellen Benutzers aus",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Benutzer"
+            }
+          }
+        }
+      }
+    },
+    "/data/depot": {
+      "get": {
+        "tags": [
+          "data"
+        ],
+        "summary": "Depotinformartionen des Benutzers",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Depot"
+            }
+          }
+        }
+      }
+    },
+    "/data/depotAlle": {
+      "get": {
+        "tags": [
+          "data"
+        ],
+        "summary": "Depotwert aller Benutzer",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Depotwert"
+            }
+          }
+        }
+      }
+    },
+    "/data/nachrichten": {
+      "get": {
+        "tags": [
+          "data"
+        ],
+        "summary": "Nachrichten aller Benutzer",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Nachrichten"
+            }
+          }
+        }
+      }
+    },
+    "/data/umsaetze": {
+      "get": {
+        "tags": [
+          "data"
+        ],
+        "summary": "Umsatzinformationen",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Umsatz"
+            }
+          }
+        }
+      }
+    },
+    "/data/umsaetze/add": {
+      "post": {
+        "tags": [
+          "data"
+        ],
+        "summary": "Kauf / Verkauf von Aktien",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AktieKaufVerkauf"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/AktieKaufVerkauf"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity / Invalid input"
+          }
+        }
+      }
+    },
+    "/data/umsaetze/{umsatzID}": {
+      "get": {
+        "tags": [
+          "data"
+        ],
+        "summary": "Finde Umsatz auf Basis der ID",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "umsatzID",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/UmsatzId"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Aktie": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Microsoft"
+          },
+          "preis": {
+            "type": "number",
+            "example": 12.05
+          },
+          "anzahlVerfuegbar": {
+            "type": "number",
+            "example": 100
+          }
+        }
+      }
+    },
+    "AktieKaufVerkauf": {
+      "type": "object",
+      "properties": {
+        "aktie": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "Microsoft"
+            }
+          }
+        },
+        "anzahl": {
+          "type": "number",
+          "example": 2
+        }
+      }
+    },
+    "Benutzer": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Max"
+        },
+        "kontostand": {
+          "type": "number",
+          "example": 10000
+        }
+      }
+    },
+    "Depot": {
+      "type": "object",
+      "properties": {
+        "positionen": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "aktie": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Microsoft"
+                  },
+                  "preis": {
+                    "type": "number",
+                    "example": 8.87
+                  },
+                  "anzahlVerfuegbar": {
+                    "type": "number",
+                    "example": 89
+                  }
+                }
+              },
+              "anzahl": {
+                "type": "number",
+                "example": 12
+              }
+            }
+          }
+        },
+        "wert": {
+          "type": "number",
+          "example": 106.44
+        }
+      }
+    },
+    "Depotwert": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Max"
+          },
+          "summe": {
+            "type": "number",
+            "example": 1337
+          }
+        }
+      }
+    },
+    "Nachrichten": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "zeit": {
+            "type": "number",
+            "example": 1606915447451
+          },
+          "uhrzeit": {
+            "type": "string",
+            "example": "14:24"
+          },
+          "text": {
+            "type": "string",
+            "example": "KAUF: Max: 2 Microsoft"
+          }
+        }
+      }
+    },
+    "Umsatz": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "aktie": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "Microsoft"
+              },
+              "preis": {
+                "type": "number",
+                "example": 91.01
+              },
+              "anzahlVerfuegbar": {
+                "type": "number",
+                "example": 460
+              }
+            }
+          },
+          "anzahl": {
+            "type": "number",
+            "example": 40
+          }
+        }
+      }
+    },
+    "UmsatzId": {
+      "type": "object",
+      "properties": {
+        "aktie": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "Microsoft"
+            },
+            "preis": {
+              "type": "number",
+              "example": 91.01
+            },
+            "anzahlVerfuegbar": {
+              "type": "number",
+              "example": 460
+            }
+          }
+        },
+        "anzahl": {
+          "type": "number",
+          "example": 40
+        }
+      }
+    }
+  }
+}
