@@ -44,5 +44,4 @@ async function showSales() {
     let sales2 = document.getElementById("sales2").innerHTML="Name: " +
         salesInJson[1].name + "<br \>" + "preis: " + salesInJson[1].preis + "<br \>"
         + "AnzahlVerfuegbar: " + salesInJson[1].anzahlVerfuegbar;
-
 }
