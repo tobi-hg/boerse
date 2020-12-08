@@ -23,20 +23,17 @@ async function getBalance() {
 
 }
 
-
-async function getSales() {
-    const response = await fetch('/data/aktien');
-    const jsonResponse = await response.json();
-    console.log(jsonResponse);
-    return jsonResponse;
-}
-
-
 async function showUser() {
     let user = await getName();
     let balance = await getBalance();
     document.getElementById("userName").innerHTML = "Username: " + user;
     document.getElementById("balance").innerHTML = "Balance: " + balance;
+}
+async function getSales() {
+    const response = await fetch('/data/aktien');
+    const jsonResponse = await response.json();
+    console.log(jsonResponse);
+    return jsonResponse;
 }
 
 async function showSales() {
