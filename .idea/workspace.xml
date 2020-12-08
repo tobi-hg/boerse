@@ -1,16 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="5919501c-3b81-454b-b3a1-fad74a103862" name="Default Changelist" comment="current version(08.12.20; 11:53)" />
+    <list default="true" id="5919501c-3b81-454b-b3a1-fad74a103862" name="Default Changelist" comment="current version(08.12.20; 11:53)">
+      <change afterPath="$PROJECT_DIR$/test/test" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="ChangesViewManager">
-    <option name="groupingKeys">
-      <option value="directory" />
-    </option>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -68,6 +83,7 @@
       <workItem from="1607351399554" duration="3271000" />
       <workItem from="1607364558498" duration="5979000" />
       <workItem from="1607423301328" duration="4600000" />
+      <workItem from="1607428381507" duration="108000" />
     </task>
     <task id="LOCAL-00001" summary="current version(08.12.20; 11:53)">
       <created>1607424833751</created>
@@ -96,6 +112,17 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="current version(08.12.20; 11:53)" />
     <option name="LAST_COMMIT_MESSAGE" value="current version(08.12.20; 11:53)" />
@@ -110,6 +137,10 @@
     </state>
     <state x="414" y="221" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.977@0.23.1920.977" timestamp="1606916761376" />
     <state x="414" y="235" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.1920.1160/0.0.1920.1160@0.0.1920.1160" timestamp="1606473360197" />
+    <state x="1122" y="492" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1607428476814">
+      <screen x="0" y="25" width="2560" height="1354" />
+    </state>
+    <state x="1122" y="492" key="#com.intellij.fileTypes.FileTypeChooser/0.25.2560.1354@0.25.2560.1354" timestamp="1607428476814" />
     <state x="690" y="327" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1606395528971">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
