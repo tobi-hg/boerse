@@ -7,7 +7,9 @@ async function start() {
     await showUser();
     await showSharePrice();
     let buy = document.querySelector('.buy');
-    buy.addEventListener('click', buyAction);
+    buy.addEventListener('click', await buyAction);
+    let sell = document.querySelector('sell')
+    sell.addEventListener('click', await sellAction)
 }
 
 function printDate() {
@@ -27,7 +29,7 @@ async function getBalance() {
     const response = await fetch('/data/benutzerdaten');
     /** Get the Json format of the object from Server**/
     const jsonResponse = await response.json();
-    return jsonResponse.kontostand;
+    return jsonResponse.kontostand.toFixed(2);
 
 }
 
@@ -86,7 +88,7 @@ async function showSharePrice() {
     let chart = new Chart(context, config);
 }
 
-function buyAction() {
+async function buyAction() {
     let name;
     let quantity;
     if (document.getElementById("microsoft").checked) {
@@ -113,7 +115,21 @@ function buyAction() {
         name = document.getElementById("facebook").value;
         quantity = document.getElementById("facebookNumber").value;
     }
-    console.log(name);
-    console.log(quantity);
+
+    let action = {
+        "aktie": {
+            name: name
+        },
+        anzahl: quantity
+    }
+    let response = await fetch("/data/umsaetze/add", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(action)
+    });
+}
+async function sellAction() {
 
 }

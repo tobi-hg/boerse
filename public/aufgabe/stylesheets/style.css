@@ -31,7 +31,7 @@ header {
 input[type=number]{
     width: 35px;
 }
-.buy {
+.buy, .sell {
     background-color: #494949;
     border: none;
     color: white;
@@ -42,4 +42,7 @@ input[type=number]{
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+}
+.buyStocks h2 {
+    padding-left: 15px;
 }
