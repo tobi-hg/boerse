@@ -9,7 +9,7 @@ async function start() {
     let buy = document.querySelector('.buy');
     buy.addEventListener('click', await buyAction);
     let sell = document.querySelector('sell')
-    sell.addEventListener('click', await sellAction)
+    //sell.addEventListener('click', await sellAction)
 }
 
 function printDate() {
@@ -130,6 +130,7 @@ async function buyAction() {
         body: JSON.stringify(action)
     });
 }
+/*
 async function sellAction() {
 
-}
+}*/
