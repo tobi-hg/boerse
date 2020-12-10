@@ -2,8 +2,15 @@
 window.onload = start;
 
 async function start() {
-    let user = showUser();
-    let sales = showSales();
+    await printDate();
+    window.setInterval('await printDate()', 1000);
+    await showUser();
+    await showSales();
+    await showSharePrice()
+}
+
+async function printDate() {
+    document.getElementById("date").innerHTML = new Date().toDateString();
 }
 
 async function getName() {
@@ -26,14 +33,51 @@ async function getBalance() {
 async function showUser() {
     let user = await getName();
     let balance = await getBalance();
-    document.getElementById("userName").innerHTML = "Username: " + user;
-    document.getElementById("balance").innerHTML = "Balance: " + balance;
+    document.getElementById("userName").innerText = "Benutzername: " + user;
+    document.getElementById("balance").innerText = "Kontostand: " + balance + " $";
 }
 async function getSales() {
     const response = await fetch('/data/aktien');
     const jsonResponse = await response.json();
     console.log(jsonResponse);
     return jsonResponse;
+}
+
+// Gibt den Aktienkurs in dem Canvas 'myChart' aus
+async function showSharePrice() {
+    let context = document.getElementById("myChart");
+    let sales = await getSales();
+    //Alle Namen der Aktien holen
+    let labels = sales.map(function(e){
+        return e.name;
+    });
+    //Alle Preise der Akien holen
+    let data = sales.map(function (e) {
+        return e.preis;
+    })
+    //Aktienkursdarstellung konfigurieren
+    let config = {
+        type: 'line',
+        data : {
+            labels: labels,
+            datasets: [{
+                label: 'Graph line',
+                data: data,
+                borderColor: 'rgb(73,153,202)',
+                backgroundColor: 'rgba(236, 241,241, 0)'
+            }],
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    };
+    let chart = new Chart(context, config);
 }
 
 async function showSales() {

@@ -1,6 +1,30 @@
-body {
-    background-color: lavender;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-p{
-    margin-left: 15px;
+
+body {
+    background: #ecf1f1;
+    font-family: 'Helvetica', arial, sans-serif;
+    color: #494949;
+}
+
+header {
+    display: grid;
+    grid-gap: 0.25rem;
+    text-align: center;
+    padding: 1rem;
+    background-color: #494949;
+    color: azure;
+}
+
+.user {
+    display: grid;
+    margin: 0.5rem;
+}
+
+.share-price {
+    display: grid;
+    margin-left: 0.5rem;
 }
