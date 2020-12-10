@@ -91,7 +91,7 @@ function buyAction() {
     let quantity;
     if (document.getElementById("microsoft").checked) {
         name = document.getElementById("microsoft").value;
-        quantity = document.getElementById("microsoftAnzahl").value;
+        quantity = document.getElementById("microsoftNumber").value;
     }
     if (document.getElementById("apple").checked) {
         name = document.getElementById("apple").value;
