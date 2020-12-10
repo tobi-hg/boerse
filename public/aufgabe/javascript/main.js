@@ -2,14 +2,15 @@
 window.onload = start;
 
 async function start() {
-    await printDate();
-    window.setInterval('await printDate()', 1000);
+    printDate();
+    window.setInterval('printDate()', 1000);
     await showUser();
-    await showSales();
-    await showSharePrice()
+    await showSharePrice();
+    let buy = document.querySelector('.buy');
+    buy.addEventListener('click', buyAction);
 }
 
-async function printDate() {
+function printDate() {
     document.getElementById("date").innerHTML = new Date().toDateString();
 }
 
@@ -36,6 +37,7 @@ async function showUser() {
     document.getElementById("userName").innerText = "Benutzername: " + user;
     document.getElementById("balance").innerText = "Kontostand: " + balance + " $";
 }
+
 async function getSales() {
     const response = await fetch('/data/aktien');
     const jsonResponse = await response.json();
@@ -46,19 +48,23 @@ async function getSales() {
 // Gibt den Aktienkurs in dem Canvas 'myChart' aus
 async function showSharePrice() {
     let context = document.getElementById("myChart");
+    /** Adjust Size **/
+    let contextValue = context.getContext("2d");
+    contextValue.canvas.width = 1000;
+    contextValue.canvas.height = 150;
+    /** Alle Namen der Aktien holen **/
     let sales = await getSales();
-    //Alle Namen der Aktien holen
-    let labels = sales.map(function(e){
+    let labels = sales.map(function (e) {
         return e.name;
     });
-    //Alle Preise der Akien holen
+    //Alle Preise der Aktien holen
     let data = sales.map(function (e) {
         return e.preis;
     })
     //Aktienkursdarstellung konfigurieren
     let config = {
         type: 'line',
-        data : {
+        data: {
             labels: labels,
             datasets: [{
                 label: 'Graph line',
@@ -80,12 +86,34 @@ async function showSharePrice() {
     let chart = new Chart(context, config);
 }
 
-async function showSales() {
-    let salesInJson = await getSales();
-    let sales1 = document.getElementById("sales1").innerHTML="Name: " +
-        salesInJson[0].name + "<br \>" + "preis: " + salesInJson[0].preis + "<br \>"
-        + "AnzahlVerfuegbar: " + salesInJson[0].anzahlVerfuegbar;
-    let sales2 = document.getElementById("sales2").innerHTML="Name: " +
-        salesInJson[1].name + "<br \>" + "preis: " + salesInJson[1].preis + "<br \>"
-        + "AnzahlVerfuegbar: " + salesInJson[1].anzahlVerfuegbar;
+function buyAction() {
+    let name;
+    let quantity;
+    if (document.getElementById("microsoft").checked) {
+        name = document.getElementById("microsoft").value;
+        quantity = document.getElementById("microsoftAnzahl").value;
+    }
+    if (document.getElementById("apple").checked) {
+        name = document.getElementById("apple").value;
+        quantity = document.getElementById("appleNumber").value;
+    }
+    if (document.getElementById("niantic").checked) {
+        name = document.getElementById("niantic").value;
+        quantity = document.getElementById("nianticNumber").value;
+    }
+    if (document.getElementById("amd").checked) {
+        name = document.getElementById("amd").value;
+        quantity = document.getElementById("amdNumber").value;
+    }
+    if (document.getElementById("intel").checked) {
+        name = document.getElementById("intel").value;
+        quantity = document.getElementById("intelNumber").value;
+    }
+    if (document.getElementById("facebook").checked) {
+        name = document.getElementById("facebook").value;
+        quantity = document.getElementById("facebookNumber").value;
+    }
+    console.log(name);
+    console.log(quantity);
+
 }
