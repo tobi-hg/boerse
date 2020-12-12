@@ -138,13 +138,16 @@ async function sellAction() {
 async function appendData() {
     const umsatz = await fetchUmsatz();
     console.log(umsatz);
-    const container = document.getElementById("umsatz");
+    const container = document.getElementById("action");
     umsatz.forEach(function (e) {
-        console.log(e.aktie.name)
-        const u = document.createElement('p');
-        u.classList.add("aktie");
-        u.innerText = "Name: " + e.aktie.name + " Preis: " + e.aktie.preis + " $ Anzahl: " + e.anzahl;
-        container.appendChild(u)
+        let tr = document.createElement("tr");
+        let name = tr.insertCell();
+        let price = tr.insertCell();
+        let quantity = tr.insertCell()
+        name.innerHTML=e.aktie.name;
+        price.innerHTML=e.aktie.preis  + "$";
+        quantity.innerHTML = e.anzahl;
+        container.appendChild(tr)
     });
 }
 

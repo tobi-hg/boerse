@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>stock market</title>
     <script src="javascript/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
@@ -19,8 +18,20 @@
     <p id="userName"></p>
     <p id="balance"></p>
 </div>
-<h4>Umsätze</h4>
-<div id="umsatz" class="umsatz">
+<div class="umsatz">
+    <h3>Umsatzinformation</h3>
+    <table id="actions">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Preis</th>
+            <th>Anzahl</th>
+        </tr>
+        </thead>
+        <tbody id="action">
+
+        </tbody>
+    </table>
 </div>
 <div class="share-price">
     <h3>Aktienkurs</h3>
