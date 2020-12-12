@@ -5,10 +5,11 @@ async function start() {
     printDate();
     window.setInterval('printDate()', 1000);
     await showUser();
+    await appendData();
     await showSharePrice();
     let buy = document.querySelector('.buy');
     buy.addEventListener('click', await buyAction);
-    let sell = document.querySelector('sell')
+    let sell = document.querySelector('.sell')
     //sell.addEventListener('click', await sellAction)
 }
 
@@ -43,7 +44,6 @@ async function showUser() {
 async function getSales() {
     const response = await fetch('/data/aktien');
     const jsonResponse = await response.json();
-    console.log(jsonResponse);
     return jsonResponse;
 }
 
@@ -134,3 +134,20 @@ async function buyAction() {
 async function sellAction() {
 
 }*/
+
+async function appendData() {
+    const umsatz = await fetchUmsatz();
+    console.log(umsatz);
+    const container = document.getElementById("umsatz");
+    umsatz.forEach(function (e) {
+        console.log(e.aktie.name)
+        const u = document.createElement('p');
+        u.innerText = "Name: " + e.aktie.name + " Preis: " + e.aktie.preis + " $ Anzahl: " + e.anzahl;
+        container.appendChild(u)
+    });
+}
+
+async function fetchUmsatz() {
+    const response = await fetch("/data/umsaetze");
+    return await response.json();
+}
