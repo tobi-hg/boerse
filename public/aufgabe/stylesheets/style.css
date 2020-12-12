@@ -24,13 +24,29 @@ header {
     margin: 0.5rem;
 }
 
+.umsatz {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 125px);
+    grid-auto-flow: dense;
+    grid-gap: 0.5rem;
+    margin: 0.5rem;
+}
+
+.aktie {
+    display: grid;
+    height: 50px;
+    border: 0.25px solid #494949;
+}
+
 .share-price {
     display: grid;
     margin-left: 0.5rem;
 }
-input[type=number]{
+
+input[type=number] {
     width: 35px;
 }
+
 .buy, .sell {
     background-color: #494949;
     border: none;
@@ -43,6 +59,7 @@ input[type=number]{
     margin: 4px 2px;
     cursor: pointer;
 }
+
 .buyStocks h2 {
     padding-left: 15px;
 }

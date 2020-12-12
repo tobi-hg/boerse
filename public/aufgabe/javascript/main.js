@@ -142,6 +142,7 @@ async function appendData() {
     umsatz.forEach(function (e) {
         console.log(e.aktie.name)
         const u = document.createElement('p');
+        u.classList.add("aktie");
         u.innerText = "Name: " + e.aktie.name + " Preis: " + e.aktie.preis + " $ Anzahl: " + e.anzahl;
         container.appendChild(u)
     });
