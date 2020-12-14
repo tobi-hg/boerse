@@ -3,14 +3,14 @@ window.onload = start;
 
 async function start() {
     printDate();
-    window.setInterval('printDate()', 1000);
+    window.setInterval(printDate, 1000);
     await showUser();
     await appendData();
     await showSharePrice();
     let buy = document.querySelector('.buy');
-    buy.addEventListener('click', await buyAction);
+    buy.addEventListener('click', buyAction);
     let sell = document.querySelector('.sell')
-    //sell.addEventListener('click', await sellAction)
+    sell.addEventListener('click', await sellAction)
 }
 
 function printDate() {
@@ -48,6 +48,7 @@ async function getSales() {
 }
 
 // Gibt den Aktienkurs in dem Canvas 'myChart' aus
+/** Werte aktualisieren; Valute hinzufügen **/
 async function showSharePrice() {
     let context = document.getElementById("myChart");
     /** Adjust Size **/
@@ -130,10 +131,49 @@ async function buyAction() {
         body: JSON.stringify(action)
     });
 }
-/*
-async function sellAction() {
 
-}*/
+async function sellAction() {
+    let name;
+    let quantity;
+    if (document.getElementById("microsoft").checked) {
+        name = document.getElementById("microsoft").value;
+        quantity = document.getElementById("microsoftNumber").value;
+    }
+    if (document.getElementById("apple").checked) {
+        name = document.getElementById("apple").value;
+        quantity = document.getElementById("appleNumber").value;
+    }
+    if (document.getElementById("niantic").checked) {
+        name = document.getElementById("niantic").value;
+        quantity = document.getElementById("nianticNumber").value;
+    }
+    if (document.getElementById("amd").checked) {
+        name = document.getElementById("amd").value;
+        quantity = document.getElementById("amdNumber").value;
+    }
+    if (document.getElementById("intel").checked) {
+        name = document.getElementById("intel").value;
+        quantity = document.getElementById("intelNumber").value;
+    }
+    if (document.getElementById("facebook").checked) {
+        name = document.getElementById("facebook").value;
+        quantity = document.getElementById("facebookNumber").value;
+    }
+
+    let action = {
+        "aktie": {
+            name: name
+        },
+        anzahl: -quantity
+    }
+    let response = await fetch("/data/umsaetze/add", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(action)
+    });
+}
 
 async function appendData() {
     const umsatz = await fetchUmsatz();
