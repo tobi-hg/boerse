@@ -133,9 +133,7 @@
             }
           }
         }
-      }
-    },
-    "/data/umsaetze/add": {
+      },
       "post": {
         "tags": [
           "data"
@@ -166,7 +164,10 @@
             }
           },
           "422": {
-            "description": "Unprocessable Entity / Invalid input"
+            "description": "Invalid input",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -194,6 +195,12 @@
             "description": "successful operation",
             "schema": {
               "$ref": "#/definitions/UmsatzId"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity / Invalid input",
+            "schema": {
+              "$ref": "#/definitions/Error"
             }
           }
         }
@@ -378,6 +385,15 @@
         "anzahl": {
           "type": "number",
           "example": 40
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "some error"
         }
       }
     }

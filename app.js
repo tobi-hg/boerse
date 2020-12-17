@@ -101,20 +101,20 @@ app.get('/data/umsaetze/:id', function (req, res) {
     let user = finder.findUserByName(req.user);
     let index = parseInt(req.params.id);
     if (!user.umsaetze[index]) {
-        res.jsonp("error: index not found");
+        res.status(422).send({"error": "index not found"});
     }
     res.jsonp(user.umsaetze[index]);
 });
 
 app.get('/data/umsaetze', function (req, res) {
     let user = finder.findUserByName(req.user);
-    res.jsonp(user.umsaetze);
+    res.status(200).send(user.umsaetze);
 });
 
 /** kauft oder verkauft Aktien
  * liefert success- oder error-Objekt
  * */
-app.post('/data/umsaetze/add', function (req, res) {
+app.post('/data/umsaetze', function (req, res) {
     let user;
     let aktie;
     let anzahl;
@@ -123,13 +123,13 @@ app.post('/data/umsaetze/add', function (req, res) {
         aktie = finder.findAktieByName(req.body.aktie.name);
         anzahl = parseInt(req.body.anzahl);
         if (anzahl === null || isNaN(anzahl)) {
-            throw "error: ungueltige anzahl";
+            throw "ungueltige anzahl";
         }
         user.buy(aktie, anzahl);
     }
     catch (err) {
         //console.log(JSON.stringify(err));
-        res.status(200).send({"error": err});
+        res.status(422).send({"error": err});
         return;
     }
 

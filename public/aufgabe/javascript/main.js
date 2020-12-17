@@ -1,4 +1,5 @@
-'use strict'
+"use strict";
+
 window.onload = start;
 
 async function start() {
@@ -7,6 +8,7 @@ async function start() {
     await showUser();
     await appendData();
     await showSharePrice();
+    await showShares();
     let buy = document.querySelector('.buy');
     buy.addEventListener('click', buyAction);
     let sell = document.querySelector('.sell')
@@ -41,24 +43,23 @@ async function showUser() {
     document.getElementById("balance").innerText = "Kontostand: " + balance + " $";
 }
 
-async function getSales() {
+async function fetchShares() {
     const response = await fetch('/data/aktien');
-    const jsonResponse = await response.json();
-    return jsonResponse;
+    return await response.json();
 }
 
 // Gibt den Aktienkurs in dem Canvas 'myChart' aus
 async function showSharePrice() {
     let context = document.getElementById("myChart").getContext('2d');
     /** Alle Namen der Aktien holen **/
-    let sales = await getSales();
+    let sales = await fetchShares();
     let labels = sales.map(function (e) {
         return e.name;
     });
     //Alle Preise der Aktien holen
     let data = sales.map(function (e) {
         return e.preis;
-    })
+    });
     //Aktienkursdarstellung konfigurieren
     let config = {
         type: 'line',
@@ -88,7 +89,7 @@ async function showSharePrice() {
     console.log(chart.data.datasets[0].data)
 
     async function updateDate() {
-        sales = await getSales();
+        sales = await fetchShares();
         let updateData = sales.map(function (e) {
             return e.preis;
         })
@@ -98,6 +99,26 @@ async function showSharePrice() {
     }
 
     window.setInterval(updateDate, 1000);
+}
+
+async function showShares() {
+    const shareList = document.querySelector(".shares-list");
+    let shares = await fetchShares();
+    shares.forEach(function (share) {
+        const shareDiv = document.createElement("div");
+        shareDiv.classList.add("share");
+        const newShare = document.createElement("li");
+        newShare.innerText = share.name;
+        const newShareNum = document.createElement("input");
+        newShareNum.type = "number";
+        newShareNum.min = "1";
+        newShareNum.max = share.anzahlVerfuegbar;
+        newShareNum.value = "1";
+        shareDiv.appendChild(newShare);
+        shareDiv.appendChild(newShareNum);
+        shareList.appendChild(shareDiv);
+    })
+    console.log(shares);
 }
 
 async function buyAction() {
@@ -134,7 +155,7 @@ async function buyAction() {
         },
         anzahl: quantity
     }
-    let response = await fetch("/data/umsaetze/add", {
+    let response = await fetch("/data/umsaetze", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
@@ -177,7 +198,7 @@ async function sellAction() {
         },
         anzahl: -quantity
     }
-    let response = await fetch("/data/umsaetze/add", {
+    let response = await fetch("/data/umsaetze", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'

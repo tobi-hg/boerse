@@ -41,6 +41,30 @@ margin: 0.5rem;
     margin-left: 0.5rem;
 }
 
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    justify-content: center;
+}
+
+.shares-list {
+    list-style: none;
+}
+
+.share {
+    margin: 0.25rem;
+    padding: 0.25rem;
+    background: white;
+    display: grid;
+    grid-template-columns: 1fr repeat(2, minmax(60px,80px));
+    grid-auto-flow: column;
+    align-items: center;
+}
+
+.buyStocks {
+    margin: 0.25rem;
+}
+
 input[type=number] {
     width: 35px;
 }
@@ -58,9 +82,6 @@ input[type=number] {
     cursor: pointer;
 }
 
-.buyStocks h2 {
-    padding-left: 15px;
-}
 th{
     padding-right: 50px;
     text-align: center;
