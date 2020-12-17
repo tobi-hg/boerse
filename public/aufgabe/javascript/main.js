@@ -10,7 +10,7 @@ async function start() {
     let buy = document.querySelector('.buy');
     buy.addEventListener('click', buyAction);
     let sell = document.querySelector('.sell')
-    sell.addEventListener('click', await sellAction)
+    sell.addEventListener('click', sellAction)
 }
 
 function printDate() {
@@ -48,13 +48,8 @@ async function getSales() {
 }
 
 // Gibt den Aktienkurs in dem Canvas 'myChart' aus
-/** Werte aktualisieren; Valute hinzufügen **/
 async function showSharePrice() {
-    let context = document.getElementById("myChart");
-    /** Adjust Size **/
-    let contextValue = context.getContext("2d");
-    contextValue.canvas.width = 1000;
-    contextValue.canvas.height = 150;
+    let context = document.getElementById("myChart").getContext('2d');
     /** Alle Namen der Aktien holen **/
     let sales = await getSales();
     let labels = sales.map(function (e) {
@@ -73,20 +68,36 @@ async function showSharePrice() {
                 label: 'Graph line',
                 data: data,
                 borderColor: 'rgb(73,153,202)',
-                backgroundColor: 'rgba(236, 241,241, 0)'
+                backgroundColor: 'rgba(236, 241,241, 0)',
             }],
         },
         options: {
             scales: {
                 yAxes: [{
                     ticks: {
+                        // min: 0
+                        // max: 300,
                         beginAtZero: true
+                        //stepSize: 30
                     }
                 }]
             }
         }
     };
     let chart = new Chart(context, config);
+    console.log(chart.data.datasets[0].data)
+
+    async function updateDate() {
+        sales = await getSales();
+        let updateData = sales.map(function (e) {
+            return e.preis;
+        })
+        chart.data.datasets[0].data = updateData;
+        console.log(chart.data.datasets[0].data);
+        chart.update()
+    }
+
+    window.setInterval(updateDate, 1000);
 }
 
 async function buyAction() {
@@ -184,8 +195,8 @@ async function appendData() {
         let name = tr.insertCell();
         let price = tr.insertCell();
         let quantity = tr.insertCell()
-        name.innerHTML=e.aktie.name;
-        price.innerHTML=e.aktie.preis  + "$";
+        name.innerHTML = e.aktie.name;
+        price.innerHTML = e.aktie.preis + "$";
         quantity.innerHTML = e.anzahl;
         container.appendChild(tr)
     });

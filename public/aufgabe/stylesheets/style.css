@@ -3,7 +3,9 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+#myChart{
+    display: grid;
+}
 body {
     background: #ecf1f1;
     font-family: 'Helvetica', arial, sans-serif;
