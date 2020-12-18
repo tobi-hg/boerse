@@ -176,8 +176,7 @@ async function handleShares() {
         }
     }
 
-    async function buyAction(event) {
-        event.preventDefault();
+    async function buyAction() {
         const share = state.target;
         if (share !== null) {
             let name = share.innerText;
@@ -203,8 +202,7 @@ async function handleShares() {
         }
     }
 
-    async function sellAction(event) {
-        event.preventDefault();
+    async function sellAction() {
         const share = state.target;
         if (share !== null) {
             let name = share.innerText;
