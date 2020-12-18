@@ -12,15 +12,14 @@
     <h1>Börsensimulation</h1>
     <h4 id="date"></h4>
 </header>
-
 <div class="user">
     <h3>Benutzerinformationen</h3>
     <p id="userName"></p>
     <p id="balance"></p>
 </div>
-<div class="umsatz">
+<div class="sales">
     <h3>Umsatzinformation</h3>
-    <table id="actions">
+    <table id="shares">
         <thead>
         <tr>
             <th>Name</th>
@@ -28,43 +27,22 @@
             <th>Anzahl</th>
         </tr>
         </thead>
-        <tbody id="action">
-
-        </tbody>
+        <tbody id="share"></tbody>
     </table>
 </div>
 <div class="share-price">
     <h3>Aktienkurs</h3>
     <canvas id="myChart" width="1000" height="200"></canvas>
 </div>
-<div class="buyStocks">
+<div class="buy-sell-shares">
     <h3>Aktien</h3>
-    <div class="container">
+    <div class="shares-list-container">
         <ul class="shares-list"></ul>
     </div>
-    <!-- Dynamisch verwalten und in div packen -->
-        <form>
-        <input type="radio" id="microsoft" name="aktion" value="Microsoft">
-        <label for="microsoft">Microsoft</label>
-        <input type="number" id="microsoftNumber" min="1" name="anzahl" value="1"><br>
-        <input type="radio" id="apple" name="aktion" value="Apple">
-        <label for="apple">Apple</label>
-        <input type="number" id="appleNumber" min="1" name="anzahl" value="1"><br>
-        <input type="radio" id="niantic" name="aktion" value="Niantic">
-        <label for="niantic">Niantic</label>
-        <input type="number" id="nianticNumber" min="1" name="anzahl" value="1"><br>
-        <input type="radio" id="amd" name="aktion" value="AMD">
-        <label for="amd">AMD</label>
-        <input type="number" id="amdNumber" min="1" name="anzahl" value="1"><br>
-        <input type="radio" id="intel" name="aktion" value="Intel">
-        <label for="intel">Intel</label>
-        <input type="number" id="intelNumber" min="1" name="anzahl" value="1"><br>
-        <input type="radio" id="facebook" name="aktion" value="Facebook">
-        <label for="facebook">Facebook</label>
-        <input type="number" id="facebookNumber" min="1" name="anzahl" value="1"><br>
-        <button class="buy">Kaufen</button>
-        <button class="sell">Verkaufen</button>
-        </form>
+    <form>
+        <button id="buy-btn" class="buy">Kaufen</button>
+        <button id="sell-btn" class="sell">Verkaufen</button>
+    </form>
 </div>
 </body>
 </html>
