@@ -18,6 +18,9 @@ header {
     background-color: #494949;
     color: azure;
 }
+.rangList{
+    margin: 0.5rem;
+}
 
 .user {
     display: grid;

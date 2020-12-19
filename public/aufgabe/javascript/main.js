@@ -53,7 +53,6 @@ async function handleShares() {
     const shareList = document.querySelector(".shares-list");
     const buy = document.querySelector('.buy');
     const sell = document.querySelector('.sell')
-
     // state with the current share that the user has chosen to buy / sell
     // starts with initial value: null
     let state = {
@@ -71,6 +70,7 @@ async function handleShares() {
     await showSharePrice();
     //prints the currently available shares for buying / selling
     await showShares();
+    await displayRanking();
 
 
     async function appendData() {
@@ -89,19 +89,19 @@ async function handleShares() {
         });
     }
 
-    // Gibt den Aktienkurs in dem Canvas 'myChart' aus
+    /** Outputs the share price in the 'myChart' canvas **/
     async function showSharePrice() {
         let context = document.getElementById("myChart").getContext('2d');
-        /** Alle Namen der Aktien holen **/
+        /** Gets all the names of the stocks **/
         let sales = await fetchShares();
         let labels = sales.map(function (e) {
             return e.name;
         });
-        //Alle Preise der Aktien holen
+        /** Gets all the prices of the stocks **/
         let data = sales.map(function (e) {
             return e.preis;
         });
-        //Aktienkursdarstellung konfigurieren
+        /** Configures stock price display **/
         let config = {
             type: 'line',
             data: {
@@ -140,6 +140,7 @@ async function handleShares() {
 
     async function showShares() {
         let shares = await fetchShares();
+        console.log(shares);
         shares.forEach(function (share) {
             const shareDiv = document.createElement("div");
             shareDiv.classList.add("share");
@@ -156,6 +157,33 @@ async function handleShares() {
         });
         shareList.addEventListener("click", toggleButton);
         //console.log(shares);
+    }
+
+    async function displayRanking() {
+        let rangListContainer = document.getElementById("rate");
+        let ranking = await fetchRanking();
+        let rankArray = await ranking.positionen;
+        /** sort the rankArray ascending **/
+        let sortedRankArray = rankArray.sort(compare);
+        /** Display ranking list with the table **/
+        sortedRankArray.forEach(function (rank) {
+            let tr = document.createElement("tr");
+            let name = tr.insertCell();
+            let price = tr.insertCell();
+            name.innerHTML = rank.aktie.name;
+            price.innerHTML = rank.aktie.preis;
+            rangListContainer.appendChild(tr);
+        })
+
+        function compare(a, b) {
+            if (a.aktie.preis < b.aktie.preis) {
+                return 1;
+            }
+            if (a.aktie.preis > b.aktie.preis) {
+                return -1;
+            }
+            return 0;
+        }
     }
 
     async function toggleButton(e) {
@@ -200,6 +228,7 @@ async function handleShares() {
             state.target = null;
             await appendData();
         }
+
     }
 
     async function sellAction() {
@@ -238,94 +267,8 @@ async function fetchShares() {
     return await response.json();
 }
 
-
-/*
-async function buyAction() {
-    let name;
-    let quantity;
-    if (document.getElementById("microsoft").checked) {
-        name = document.getElementById("microsoft").value;
-        quantity = document.getElementById("microsoftNumber").value;
-    }
-    if (document.getElementById("apple").checked) {
-        name = document.getElementById("apple").value;
-        quantity = document.getElementById("appleNumber").value;
-    }
-    if (document.getElementById("niantic").checked) {
-        name = document.getElementById("niantic").value;
-        quantity = document.getElementById("nianticNumber").value;
-    }
-    if (document.getElementById("amd").checked) {
-        name = document.getElementById("amd").value;
-        quantity = document.getElementById("amdNumber").value;
-    }
-    if (document.getElementById("intel").checked) {
-        name = document.getElementById("intel").value;
-        quantity = document.getElementById("intelNumber").value;
-    }
-    if (document.getElementById("facebook").checked) {
-        name = document.getElementById("facebook").value;
-        quantity = document.getElementById("facebookNumber").value;
-    }
-
-    let action = {
-        "aktie": {
-            name: name
-        },
-        anzahl: quantity
-    }
-    let response = await fetch("/data/umsaetze", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify(action)
-    });
+/** Get the ranking list **/
+async function fetchRanking() {
+    const response = await fetch('/data/depot');
+    return await response.json();
 }
-
-async function sellAction() {
-    let name;
-    let quantity;
-    if (document.getElementById("microsoft").checked) {
-        name = document.getElementById("microsoft").value;
-        quantity = document.getElementById("microsoftNumber").value;
-    }
-    if (document.getElementById("apple").checked) {
-        name = document.getElementById("apple").value;
-        quantity = document.getElementById("appleNumber").value;
-    }
-    if (document.getElementById("niantic").checked) {
-        name = document.getElementById("niantic").value;
-        quantity = document.getElementById("nianticNumber").value;
-    }
-    if (document.getElementById("amd").checked) {
-        name = document.getElementById("amd").value;
-        quantity = document.getElementById("amdNumber").value;
-    }
-    if (document.getElementById("intel").checked) {
-        name = document.getElementById("intel").value;
-        quantity = document.getElementById("intelNumber").value;
-    }
-    if (document.getElementById("facebook").checked) {
-        name = document.getElementById("facebook").value;
-        quantity = document.getElementById("facebookNumber").value;
-    }
-
-    let action = {
-        "aktie": {
-            name: name
-        },
-        anzahl: -quantity
-    }
-    let response = await fetch("/data/umsaetze", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify(action)
-    });
-}*/
-
-
-
-
