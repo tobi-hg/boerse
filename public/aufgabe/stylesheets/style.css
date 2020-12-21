@@ -112,4 +112,9 @@ input[type=number] {
 .buy:hover, .sell:hover {
     background-color: #535050;
 }
+.notification{
+
+    margin: 0.5rem;
+}
+
 

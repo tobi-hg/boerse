@@ -7,6 +7,8 @@ async function start() {
     window.setInterval(printDate, 1000);
     await getUser();
     await handleShares();
+    await displayNotification();
+    window.setInterval(displayNotification,1000);
 }
 
 /**
@@ -63,7 +65,6 @@ async function handleShares() {
     // Event Listeners
     buy.addEventListener("click", buyAction);
     sell.addEventListener("click", sellAction);
-
     // prints the current sales of the user in a table
     await appendData();
     // prints the current share prices in a chart
@@ -117,6 +118,7 @@ async function handleShares() {
                 scales: {
                     yAxes: [{
                         ticks: {
+
                             beginAtZero: true
                         }
                     }]
@@ -228,7 +230,6 @@ async function handleShares() {
             state.target = null;
             await appendData();
         }
-
     }
 
     async function sellAction() {
@@ -257,6 +258,14 @@ async function handleShares() {
     }
 }
 
+async function displayNotification() {
+    let message = document.getElementById("kauf-verkauf");
+    console.log(fetchNotification())
+    let notification = await fetchNotification();
+    let lastItem = notification.slice(-1).pop();
+    message.innerText = lastItem.uhrzeit + " " + lastItem.text;
+
+}
 async function fetchUmsatz() {
     const response = await fetch("/data/umsaetze");
     return await response.json();
@@ -270,5 +279,9 @@ async function fetchShares() {
 /** Get the ranking list **/
 async function fetchRanking() {
     const response = await fetch('/data/depot');
+    return await response.json();
+}
+async function fetchNotification() {
+    const response = await fetch('/data/nachrichten');
     return await response.json();
 }
