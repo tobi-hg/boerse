@@ -142,7 +142,6 @@ async function handleShares() {
 
     async function showShares() {
         let shares = await fetchShares();
-        console.log(shares);
         shares.forEach(function (share) {
             const shareDiv = document.createElement("div");
             shareDiv.classList.add("share");
@@ -158,7 +157,6 @@ async function handleShares() {
             shareList.appendChild(shareDiv);
         });
         shareList.addEventListener("click", toggleButton);
-        //console.log(shares);
     }
 
     async function displayRanking() {
@@ -264,7 +262,6 @@ async function displayNotification() {
     let notification = await fetchNotification();
     let lastItem = notification.slice(-1).pop();
     message.innerText = lastItem.uhrzeit + " " + lastItem.text;
-
 }
 async function fetchUmsatz() {
     const response = await fetch("/data/umsaetze");
