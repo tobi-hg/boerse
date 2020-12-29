@@ -306,83 +306,13 @@ async function handleShares() {
     }
 }
 
-/*
-    async function displayRanking() {
-        const rankContainer = document.getElementById("rank");
-        rankContainer.innerHTML = "";
-        const table = document.createElement("table");
-
-        let thead = document.createElement("thead");
-        let row = thead.insertRow();
-        let user = row.insertCell();
-        let umsatz = row.insertCell();
-        user.innerHTML = "User";
-        umsatz.innerHTML = "Umsatz";
-        table.appendChild(thead);
-
-        let ranking = await fetchRanking();
-         sort the rankArray ascending
-        let sortedRankArray = ranking.sort(compare);
-         Display ranking list with the table
-        sortedRankArray.forEach(function (rank) {
-            let tr = document.createElement("tr");
-            let name = tr.insertCell();
-            let price = tr.insertCell();
-            name.innerHTML = rank.name;
-            price.innerHTML = rank.summe.toFixed(2);
-            table.appendChild(tr);
-        });
-        rankContainer.appendChild(table);
-
-        function compare(a, b) {
-            if (a.summe < b.summe) {
-                return 1;
-            }
-            if (a.summe > b.summe) {
-                return -1;
-            }
-            return 0;
-        }
-    }*/
-/*
-async function displayRanking() {
-    const rankList = document.querySelector(".rank-list");
-    rankList.innerHTML = "";
-    let ranking = await fetchRanking();
-    /** sort the rankArray ascending
-    let sortedRankArray = ranking.sort(compare);
-    let i = 0;
-    /** Display ranking list with the table
-    sortedRankArray.forEach(function (rank) {
-        const user = document.createElement("div");
-        user.classList.add("rank-list-element");
-        user.innerText = ++i + ". Platz: " + rank.name + " Vermögen: " + rank.summe.toFixed(2) + " $";
-        rankList.appendChild(user);
-    });
-
-    function compare(a, b) {
-        if (a.summe < b.summe) {
-            return 1;
-        }
-        if (a.summe > b.summe) {
-            return -1;
-        }
-        return 0;
-    }
-}*/
-
-/** Get the ranking list **/
-async function fetchRanking() {
-    const response = await fetch('/data/depotAlle');
-    return await response.json();
-}
-
 async function displayNotification() {
     let message = document.getElementById("kauf-verkauf");
-    console.log(fetchNotification())
     let notification = await fetchNotification();
-    let lastItem = notification.slice(-1).pop();
-    message.innerText = lastItem.uhrzeit + " " + lastItem.text;
+        let lastItem = notification.slice(-1).pop();
+        if (lastItem !== undefined) {
+            message.innerText = lastItem.uhrzeit + " " + lastItem.text;
+        }
 }
 
 async function fetchUmsatz() {
