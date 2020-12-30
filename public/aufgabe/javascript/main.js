@@ -357,8 +357,11 @@ async function handleShares() {
             // sort the rankArray ascending
             let sortedRankArray = ranking.sort(compare);
             // Deletes the old Rows
-            table.deleteRow(2);
-            table.deleteRow(1);
+            let rowCount = table.rows.length;
+            let i;
+            for (i=rowCount-1; i>0; i--){
+                table.deleteRow(i);
+            }
             // fills the table with the new values
             sortedRankArray.forEach(function (rank) {
                 let tr = document.createElement("tr");
