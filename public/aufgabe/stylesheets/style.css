@@ -130,12 +130,37 @@ input[type=number] {
 }
 
 /** -------------- Notifications -------------- **/
-.notification {
+.notification-container {
     margin: 0.5rem;
 }
 
-.notification h3{
-    margin-bottom: 1rem;
+.notification-container h3 {
+    margin-bottom: 0.8rem;
+}
+
+.notifications-list {
+    display: grid;
+    grid-auto-flow: row;
+    list-style: none;
+}
+
+.pagination-wrapper {
+    text-align: start;
+    grid-auto-flow: column;
+}
+
+.page-button {
+    padding: 10px;
+    font-size: 1.0rem;
+    border: none;
+    cursor: pointer;
+}
+.page-button:hover {
+    background: silver;
+}
+
+.cur-page {
+    background: silver;
 }
 
 /** -------------- Ranking -------------- **/
