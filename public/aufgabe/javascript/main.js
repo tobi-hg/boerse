@@ -86,8 +86,6 @@ async function handleShares() {
     pageButtons(data.pages);
     // prints the ranking of the users
     await displayRanking();
-    window.setInterval(displayRanking, 1000);
-
     /**
      * trims the notifications-list for paging
      * @param notifications current notifications
@@ -337,19 +335,7 @@ async function handleShares() {
      * @returns {Promise<void>}
      */
     async function displayRanking() {
-        const rankContainer = document.getElementById("rank");
-        rankContainer.innerHTML = "";
-        const table = document.createElement("table");
-
-        // creates the header of the table
-        let thead = document.createElement("thead");
-        let row = thead.insertRow();
-        let user = row.insertCell();
-        let capital = row.insertCell();
-        user.innerHTML = "User";
-        capital.innerHTML = "Vermögen";
-        table.appendChild(thead);
-
+        const container = document.getElementById("rankList");
         let ranking = await fetchRanking();
         // sort the rankArray ascending
         let sortedRankArray = ranking.sort(compare);
@@ -360,10 +346,29 @@ async function handleShares() {
             let price = tr.insertCell();
             name.innerHTML = rank.name;
             price.innerHTML = rank.summe.toFixed(2) + " $";
-            table.appendChild(tr);
+            container.appendChild(tr);
         });
-        rankContainer.appendChild(table);
-
+        await updateRanking();
+        window.setInterval(updateRanking,1000);
+        async function updateRanking() {
+            let table = document.getElementById("rank");
+            const updateContainer = document.getElementById("rankList");
+            let ranking = await fetchRanking();
+            // sort the rankArray ascending
+            let sortedRankArray = ranking.sort(compare);
+            // Deletes the old Rows
+            table.deleteRow(2);
+            table.deleteRow(1);
+            // fills the table with the new values
+            sortedRankArray.forEach(function (rank) {
+                let tr = document.createElement("tr");
+                let name = tr.insertCell();
+                let price = tr.insertCell();
+                name.innerHTML = rank.name;
+                price.innerHTML = rank.summe.toFixed(2) + " $";
+                updateContainer.appendChild(tr);
+            });
+        }
         function compare(a, b) {
             if (a.summe < b.summe) {
                 return 1;

@@ -30,17 +30,17 @@ header {
     margin: 0.5rem;
 }
 
-th {
+.sales th {
     padding-right: 50px;
     text-align: center;
 }
 
-th, tr {
+.sales th, tr {
     padding-left: 50px;
     text-align: center;
 }
 
-table, th, td {
+.sales table, th, td {
     border: 1px solid black;
 }
 
@@ -130,37 +130,12 @@ input[type=number] {
 }
 
 /** -------------- Notifications -------------- **/
-.notification-container {
+.notification {
     margin: 0.5rem;
 }
 
-.notification-container h3 {
-    margin-bottom: 0.8rem;
-}
-
-.notifications-list {
-    display: grid;
-    grid-auto-flow: row;
-    list-style: none;
-}
-
-.pagination-wrapper {
-    text-align: start;
-    grid-auto-flow: column;
-}
-
-.page-button {
-    padding: 10px;
-    font-size: 1.0rem;
-    border: none;
-    cursor: pointer;
-}
-.page-button:hover {
-    background: silver;
-}
-
-.cur-page {
-    background: silver;
+.notification h3{
+    margin-bottom: 1rem;
 }
 
 /** -------------- Ranking -------------- **/
@@ -173,7 +148,6 @@ input[type=number] {
 }
 
 .rank-list {
-    display: grid;
     grid-auto-flow: row;
     list-style: none;
 }
@@ -186,6 +160,23 @@ input[type=number] {
     align-items: center;
     border: none;
     background: white;
+}
+
+.rank-list-container table, th, td {
+    border: 1px solid black;
+}
+.rank-list-container {
+    margin: 0.5rem;
+}
+
+.rank-list-container th {
+    padding-right: 50px;
+    text-align: center;
+}
+
+.rank-list-container th, tr {
+    padding-left: 50px;
+    text-align: center;
 }
 
 
