@@ -54,7 +54,6 @@ async function handleShares() {
     const buy = document.querySelector('.buy');
     const sell = document.querySelector('.sell')
     const messageContainer = document.querySelector(".notifications-list");
-
     /* state with the current share that the user has chosen to buy / sell
        starts with initial value: null */
     let state = {
@@ -202,7 +201,6 @@ async function handleShares() {
      */
     async function toggleButton(e) {
         const button = e.target;
-        console.log(button.type)
         if (button.type === "submit") {
             if (state.target !== null) {
                 state.target.parentElement.classList.toggle("chosenShare");
@@ -217,7 +215,6 @@ async function handleShares() {
             button.parentElement.classList.toggle("chosenShare");
         }
     }
-
     /**
      * function for buying shares
      * @returns {Promise<void>}
@@ -233,13 +230,16 @@ async function handleShares() {
                 },
                 "anzahl": quantity
             };
-            await fetch("/data/umsaetze", {
+             const response=await fetch("/data/umsaetze", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'
                 },
                 body: JSON.stringify(action)
             });
+            if (response.ok==false){
+                window.alert("Nicht genügend Aktien im Markt verfügbar");
+            }
             container.innerHTML = "";
             state.target.parentElement.classList.toggle("chosenShare");
             state.target.nextSibling.value = "1";
@@ -264,13 +264,16 @@ async function handleShares() {
                 },
                 "anzahl": -quantity
             }
-            await fetch("/data/umsaetze", {
+            const response=await fetch("/data/umsaetze", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'
                 },
                 body: JSON.stringify(action)
             });
+            if (response.ok==false){
+                window.alert("Zu wenige Aktien für Verkauf im Depot.");
+            }
             container.innerHTML = "";
             state.target.parentElement.classList.toggle("chosenShare");
             state.target = null;
