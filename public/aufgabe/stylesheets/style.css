@@ -20,7 +20,7 @@ header {
     color: azure;
 }
 
-/** ------------------------------ Userinformation ------------------------------ **/
+/** ------------------------------ User information ------------------------------ **/
 .user {
     display: grid;
     margin: 0.5rem;
@@ -50,7 +50,7 @@ header {
     margin-left: 0.5rem;
 }
 
-/** ------------------------------ Buy-/Sell + general informations ------------------------------ **/
+/** ------------------------------ Buy-/Sell + general information ------------------------------ **/
 .info-container {
     margin: 0.5rem;
     display: grid;

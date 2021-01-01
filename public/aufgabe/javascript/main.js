@@ -85,6 +85,7 @@ async function handleShares() {
     pageButtons(data.pages);
     // prints the ranking of the users
     await displayRanking();
+
     /**
      * trims the notifications-list for paging
      * @param notifications current notifications
@@ -161,6 +162,10 @@ async function handleShares() {
         };
         let chart = new Chart(context, config);
 
+        /**
+         * updates the Data in chart in every one second
+         * @returns {Promise<void>}
+         */
         async function updateData() {
             sales = await fetchShares();
             chart.data.datasets[0].data = sales.map(function (e) {
@@ -168,6 +173,7 @@ async function handleShares() {
             });
             chart.update()
         }
+
         window.setInterval(updateData, 1000);
     }
 
@@ -215,6 +221,7 @@ async function handleShares() {
             button.parentElement.classList.toggle("chosenShare");
         }
     }
+
     /**
      * function for buying shares
      * @returns {Promise<void>}
@@ -230,15 +237,19 @@ async function handleShares() {
                 },
                 "anzahl": quantity
             };
-             const response=await fetch("/data/umsaetze", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
-                body: JSON.stringify(action)
-            });
-            if (response.ok==false){
-                window.alert("Nicht genügend Aktien im Markt verfügbar");
+            if (quantity == 0) {
+                window.alert("Null Aktien können nicht gekauft werden");
+            } else {
+                const response = await fetch("/data/umsaetze", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify(action)
+                });
+                if (response.ok == false) {
+                    window.alert("Nicht genügend Aktien im Markt verfügbar");
+                }
             }
             container.innerHTML = "";
             state.target.parentElement.classList.toggle("chosenShare");
@@ -264,14 +275,14 @@ async function handleShares() {
                 },
                 "anzahl": -quantity
             }
-            const response=await fetch("/data/umsaetze", {
+            const response = await fetch("/data/umsaetze", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'
                 },
                 body: JSON.stringify(action)
             });
-            if (response.ok==false){
+            if (response.ok == false) {
                 window.alert("Zu wenige Aktien für Verkauf im Depot.");
             }
             container.innerHTML = "";
@@ -352,7 +363,12 @@ async function handleShares() {
             container.appendChild(tr);
         });
         await updateRanking();
-        window.setInterval(updateRanking,1000);
+        window.setInterval(updateRanking, 1000);
+
+        /**
+         * updates the Ranking of the users depending on the share prices
+         * @returns {Promise<void>}
+         */
         async function updateRanking() {
             let table = document.getElementById("rank");
             const updateContainer = document.getElementById("rankList");
@@ -362,7 +378,7 @@ async function handleShares() {
             // Deletes the old Rows
             let rowCount = table.rows.length;
             let i;
-            for (i=rowCount-1; i>0; i--){
+            for (i = rowCount - 1; i > 0; i--) {
                 table.deleteRow(i);
             }
             // fills the table with the new values
@@ -375,6 +391,13 @@ async function handleShares() {
                 updateContainer.appendChild(tr);
             });
         }
+
+        /**
+         * Sorts the Array ascending of the price
+         * @param a
+         * @param b
+         * @returns {number}
+         */
         function compare(a, b) {
             if (a.summe < b.summe) {
                 return 1;
@@ -401,8 +424,12 @@ async function fetchSales() {
  * @returns {Promise<any>}
  */
 async function fetchShares() {
-    const response = await fetch('/data/aktien');
-    return await response.json();
+    try {
+        const response = await fetch('/data/aktien');
+        return await response.json();
+    } catch (ERR_CONNECTION_REFUSED) {
+        window.alert("Server is offline, please start the Server");
+    }
 }
 
 /**
@@ -422,4 +449,3 @@ async function fetchRanking() {
     const response = await fetch('/data/depotAlle');
     return await response.json();
 }
-
