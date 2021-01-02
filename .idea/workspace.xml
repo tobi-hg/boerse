@@ -20,9 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5919501c-3b81-454b-b3a1-fad74a103862" name="Default Changelist" comment="current version(08.12.20; 11:53)">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/aufgabe/javascript/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/aufgabe/javascript/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/aufgabe/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/aufgabe/stylesheets/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/aufgabe/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/EuashviliUndHagemann/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/aufgabe/javascript/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/EuashviliUndHagemann/javascript/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/aufgabe/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/EuashviliUndHagemann/stylesheets/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +42,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/public/aufgabe/javascript/main.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/public/EuashviliUndHagemann/javascript/main.js" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="1klwjP2tc6oLxYAW7a3xpcHLy0r" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -207,7 +207,14 @@
       <option name="project" value="LOCAL" />
       <updated>1609359668533</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Paging hinzugefügt">
+      <created>1609587286596</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1609587286596</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -236,7 +243,8 @@
     <MESSAGE value="Optische Anpassungen" />
     <MESSAGE value="Rangliste" />
     <MESSAGE value="Ranking bug fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ranking bug fixed" />
+    <MESSAGE value="Paging hinzugefügt" />
+    <option name="LAST_COMMIT_MESSAGE" value="Paging hinzugefügt" />
   </component>
   <component name="WindowStateProjectService">
     <state width="1760" height="325" key="GridCell.Tab.0.bottom" timestamp="1609585317007">
@@ -255,9 +263,13 @@
       <screen x="0" y="25" width="2560" height="1359" />
     </state>
     <state width="1760" height="325" key="GridCell.Tab.0.right/0.25.2560.1359@0.25.2560.1359" timestamp="1609585317006" />
-    <state x="1059" y="573" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1609582988469">
+    <state x="734" y="506" key="Vcs.Push.Dialog.v2" timestamp="1609587304198">
       <screen x="0" y="25" width="2560" height="1359" />
     </state>
-    <state x="1059" y="573" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.2560.1359@0.25.2560.1359" timestamp="1609582988469" />
+    <state x="734" y="506" key="Vcs.Push.Dialog.v2/0.25.2560.1359@0.25.2560.1359" timestamp="1609587304198" />
+    <state x="1059" y="573" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1609587293727">
+      <screen x="0" y="25" width="2560" height="1359" />
+    </state>
+    <state x="1059" y="573" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.2560.1359@0.25.2560.1359" timestamp="1609587293727" />
   </component>
 </project>
