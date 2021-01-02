@@ -7,6 +7,8 @@ async function start() {
     window.setInterval(printDate, 1000);
     await getUser();
     await handleShares();
+    await updateNotifications();
+    window.setInterval(updateNotifications, 1000);
 }
 
 /**
@@ -44,48 +46,36 @@ async function getUser() {
     }
 }
 
-/**
- * prints the current share prices and handles the buy and sell functions
- * @returns {Promise<void>}
- */
-async function handleShares() {
-    const container = document.getElementById("share");
-    const shareList = document.querySelector(".shares-list");
-    const buy = document.querySelector('.buy');
-    const sell = document.querySelector('.sell')
-    const messageContainer = document.querySelector(".notifications-list");
-    /* state with the current share that the user has chosen to buy / sell
-       starts with initial value: null */
-    let state = {
-        'target': null
-    };
 
+async function updateNotifications() {
+
+
+    const messageContainer = document.querySelector(".notifications-list");
     // settings for displaying the current notifications and enabling paging
     let curNotifications = {
         'notifications': await fetchNotifications(),
         'page': 1,
         'rows': 10
     };
-
-
-    // Event Listeners
-    buy.addEventListener("click", buyAction);
-    sell.addEventListener("click", sellAction);
-    // prints the current sales of the user in a table
-    await printSales();
-    // prints the current share prices in a chart
-    await showSharePrice();
-    // prints the currently available shares for buying / selling
-    await showShares();
     // gets the data for pagination (gets updated everytime a user buys/sells a share)
     let data = pagination(curNotifications.notifications, curNotifications.page, curNotifications.rows);
     data.notifications.forEach(function (notification) {
         displayNotification(notification);
     });
     pageButtons(data.pages);
-    // prints the ranking of the users
-    await displayRanking();
 
+    /**
+     * prints the current notification
+     * @param notification
+     * @returns {Promise<void>}
+     */
+    async function displayNotification(notification) {
+        if (notification !== undefined) {
+            let message = document.createElement("div");
+            message.innerText = notification.uhrzeit + " " + notification.text;
+            messageContainer.appendChild(message);
+        }
+    }
     /**
      * trims the notifications-list for paging
      * @param notifications current notifications
@@ -103,6 +93,71 @@ async function handleShares() {
             'pages': pages
         };
     }
+
+    /**
+     * updates the List of notifications, if a new Notification has to be added
+     * @returns {Promise<void>}
+     */
+    data = pagination(curNotifications.notifications, curNotifications.page, curNotifications.rows);
+    messageContainer.innerHTML = "";
+    data.notifications.forEach(function (notification) {
+        displayNotification(notification);
+    });
+    pageButtons(data.pages);
+
+    /**
+     * creates the buttons for scrolling through the pages of the notifications
+     * @param pages
+     */
+    function pageButtons(pages) {
+        const pageDiv = document.createElement("div");
+        pageDiv.classList.add("pagination-wrapper");
+
+        for (let page = 1; page <= pages; page++) {
+            const button = document.createElement("button");
+            button.classList.add("page-button");
+            if (page === data.page) {
+                button.classList.toggle("cur-page");
+            }
+            button.innerText = page.toString();
+
+            button.addEventListener("click", async function () {
+                curNotifications.page = page;
+                await updateNotifications();
+            });
+            pageDiv.appendChild(button);
+        }
+        messageContainer.appendChild(pageDiv);
+    }
+}
+
+/**
+ * prints the current share prices and handles the buy and sell functions
+ * @returns {Promise<void>}
+ */
+async function handleShares() {
+    const container = document.getElementById("share");
+    const shareList = document.querySelector(".shares-list");
+    const buy = document.querySelector('.buy');
+    const sell = document.querySelector('.sell')
+    /* state with the current share that the user has chosen to buy / sell
+       starts with initial value: null */
+    let state = {
+        'target': null
+    };
+
+
+    // Event Listeners
+    buy.addEventListener("click", buyAction);
+    sell.addEventListener("click", sellAction);
+    // prints the current sales of the user in a table
+    await printSales();
+    // prints the current share prices in a chart
+    await showSharePrice();
+    // prints the currently available shares for buying / selling
+    await showShares();
+    // prints the ranking of the users
+    await displayRanking();
 
     /**
      * prints the current sales of the user in a table
@@ -256,7 +311,6 @@ async function handleShares() {
             state.target.nextSibling.value = "1";
             state.target = null;
             await printSales();
-            await updateNotifications();
         }
     }
 
@@ -275,74 +329,28 @@ async function handleShares() {
                 },
                 "anzahl": -quantity
             }
-            const response = await fetch("/data/umsaetze", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
-                body: JSON.stringify(action)
-            });
-            if (response.ok == false) {
-                window.alert("Zu wenige Aktien für Verkauf im Depot.");
+            if (quantity == 0) {
+                window.alert("Null Aktien können nicht verkauft werden");
+            } else {
+                const response = await fetch("/data/umsaetze", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify(action)
+                });
+                if (response.ok == false) {
+                    window.alert("Zu wenige Aktien für Verkauf im Depot.");
+                }
             }
+
             container.innerHTML = "";
             state.target.parentElement.classList.toggle("chosenShare");
             state.target = null;
             await printSales();
-            await updateNotifications();
         }
     }
 
-    /**
-     * prints the current notification
-     * @param notification
-     * @returns {Promise<void>}
-     */
-    async function displayNotification(notification) {
-        if (notification !== undefined) {
-            let message = document.createElement("div");
-            message.innerText = notification.uhrzeit + " " + notification.text;
-            messageContainer.appendChild(message);
-        }
-    }
-
-    /**
-     * updates the List of notifications, if a new Notification has to be added
-     * @returns {Promise<void>}
-     */
-    async function updateNotifications() {
-        data = pagination(curNotifications.notifications, curNotifications.page, curNotifications.rows);
-        messageContainer.innerHTML = "";
-        data.notifications.forEach(function (notification) {
-            displayNotification(notification);
-        });
-        pageButtons(data.pages);
-    }
-
-    /**
-     * creates the buttons for scrolling through the pages of the notifications
-     * @param pages
-     */
-    function pageButtons(pages) {
-        const pageDiv = document.createElement("div");
-        pageDiv.classList.add("pagination-wrapper");
-
-        for (let page = 1; page <= pages; page++) {
-            const button = document.createElement("button");
-            button.classList.add("page-button");
-            if (page === data.page) {
-                button.classList.toggle("cur-page");
-            }
-            button.innerText = page.toString();
-
-            button.addEventListener("click", async function () {
-                curNotifications.page = page;
-                await updateNotifications();
-            });
-            pageDiv.appendChild(button);
-        }
-        messageContainer.appendChild(pageDiv);
-    }
 
     /**
      * prints the table with the ranking of the users
@@ -428,7 +436,7 @@ async function fetchShares() {
         const response = await fetch('/data/aktien');
         return await response.json();
     } catch (ERR_CONNECTION_REFUSED) {
-        window.alert("Server is offline, please start the Server");
+        window.alert("There are problems with server, please restart it");
     }
 }
 
