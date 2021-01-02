@@ -22,6 +22,7 @@
     <list default="true" id="5919501c-3b81-454b-b3a1-fad74a103862" name="Default Changelist" comment="current version(08.12.20; 11:53)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/aufgabe/javascript/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/aufgabe/javascript/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/aufgabe/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/aufgabe/stylesheets/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +40,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/public/aufgabe/javascript/main.js" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="1klwjP2tc6oLxYAW7a3xpcHLy0r" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -233,5 +237,27 @@
     <MESSAGE value="Rangliste" />
     <MESSAGE value="Ranking bug fixed" />
     <option name="LAST_COMMIT_MESSAGE" value="Ranking bug fixed" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1760" height="325" key="GridCell.Tab.0.bottom" timestamp="1609585317007">
+      <screen x="0" y="25" width="2560" height="1359" />
+    </state>
+    <state width="1760" height="325" key="GridCell.Tab.0.bottom/0.25.2560.1359@0.25.2560.1359" timestamp="1609585317007" />
+    <state width="1760" height="325" key="GridCell.Tab.0.center" timestamp="1609585317006">
+      <screen x="0" y="25" width="2560" height="1359" />
+    </state>
+    <state width="1760" height="325" key="GridCell.Tab.0.center/0.25.2560.1359@0.25.2560.1359" timestamp="1609585317006" />
+    <state width="1760" height="325" key="GridCell.Tab.0.left" timestamp="1609585317005">
+      <screen x="0" y="25" width="2560" height="1359" />
+    </state>
+    <state width="1760" height="325" key="GridCell.Tab.0.left/0.25.2560.1359@0.25.2560.1359" timestamp="1609585317005" />
+    <state width="1760" height="325" key="GridCell.Tab.0.right" timestamp="1609585317007">
+      <screen x="0" y="25" width="2560" height="1359" />
+    </state>
+    <state width="1760" height="325" key="GridCell.Tab.0.right/0.25.2560.1359@0.25.2560.1359" timestamp="1609585317006" />
+    <state x="1059" y="573" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1609582988469">
+      <screen x="0" y="25" width="2560" height="1359" />
+    </state>
+    <state x="1059" y="573" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.2560.1359@0.25.2560.1359" timestamp="1609582988469" />
   </component>
 </project>
