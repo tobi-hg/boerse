@@ -222,7 +222,7 @@ async function handleShares() {
                 },
                 "anzahl": quantity
             };
-            if (quantity === 0) {
+            if (quantity == 0) {
                 window.alert("Null Aktien können nicht gekauft werden");
             } else {
                 const response = await fetch("/data/umsaetze", {
@@ -260,7 +260,7 @@ async function handleShares() {
                 },
                 "anzahl": -quantity
             }
-            if (quantity === 0) {
+            if (quantity == 0) {
                 window.alert("Null Aktien können nicht verkauft werden");
             } else {
                 const response = await fetch("/data/umsaetze", {
