@@ -7,6 +7,7 @@ async function start() {
     window.setInterval(printDate, 1000);
     await getUser();
     await handleShares();
+    await handleNotifications();
 }
 
 /**
@@ -53,7 +54,6 @@ async function handleShares() {
     const shareList = document.querySelector(".shares-list");
     const buy = document.querySelector('.buy');
     const sell = document.querySelector('.sell');
-    const messageContainer = document.querySelector(".notifications-list");
 
     /* state with the current share that the user has chosen to buy / sell
        starts with initial value: null */
@@ -66,12 +66,6 @@ async function handleShares() {
         'sales': await fetchSales(),
         'page': 1,
         'rows': 15
-    };
-    // state for the current notifications and paging
-    let curNotifications = {
-        'notifications': await fetchNotifications(),
-        'page': 1,
-        'rows': 10
     };
 
     // Event Listeners
@@ -89,13 +83,6 @@ async function handleShares() {
     await showSharePrice();
     // prints the currently available shares for buying / selling
     await showShares();
-
-    // gets the data for pagination (gets updated everytime a user buys/sells a share)
-    let notificationsData = notificationsPagination(curNotifications.notifications, curNotifications.page, curNotifications.rows);
-    notificationsData.notifications.forEach(function (notification) {
-        displayNotifications(notification);
-    });
-    pageButtons(notificationsData.pages);
 
     // prints the ranking of the users
     await displayRanking();
@@ -202,6 +189,7 @@ async function handleShares() {
      * @returns {Promise<void>}
      */
     async function toggleButton(e) {
+        e.preventDefault();
         const button = e.target;
         if (button.type === "submit") {
             if (curShare.target !== null) {
@@ -222,7 +210,8 @@ async function handleShares() {
      * function for buying shares
      * @returns {Promise<void>}
      */
-    async function buyAction() {
+    async function buyAction(e) {
+        e.preventDefault();
         const share = curShare.target;
         if (share !== null) {
             let name = share.innerText;
@@ -252,7 +241,6 @@ async function handleShares() {
             curShare.target.nextSibling.value = "1";
             curShare.target = null;
             await updateSales();
-            await updateNotifications();
         }
     }
 
@@ -260,7 +248,8 @@ async function handleShares() {
      * function for selling shares
      * @returns {Promise<void>}
      */
-    async function sellAction() {
+    async function sellAction(e) {
+        e.preventDefault();
         const share = curShare.target;
         if (share !== null) {
             let name = share.innerText;
@@ -290,31 +279,12 @@ async function handleShares() {
             curShare.target.parentElement.classList.toggle("chosenShare");
             curShare.target = null;
             await updateSales();
-            await updateNotifications();
         }
     }
 
     /**
-     * trims the notifications-list for paging
-     * @param notifications current notifications
-     * @param page current page
-     * @param rows count of rows
-     */
-    function notificationsPagination(notifications, page, rows) {
-        let trimStart = (page - 1) * rows;
-        let trimEnd = trimStart + rows;
-        let trimmedData = notifications.slice(trimStart, trimEnd);
-        let pages = Math.ceil(notifications.length / rows);
-        return {
-            'notifications': trimmedData,
-            'page': curNotifications.page,
-            'pages': pages
-        };
-    }
-
-    /**
-     * trims the notifications-list for paging
-     * @param sales current notifications
+     * trims the sales-list for paging
+     * @param sales current sales
      * @param page current page
      * @param rows count of rows
      */
@@ -331,36 +301,11 @@ async function handleShares() {
     }
 
     /**
-     * prints the current notification
-     * @param notification
-     * @returns {Promise<void>}
-     */
-    async function displayNotifications(notification) {
-        if (notification !== undefined) {
-            let message = document.createElement("div");
-            message.innerText = notification.uhrzeit + " " + notification.text;
-            messageContainer.appendChild(message);
-        }
-    }
-
-    /**
-     * updates the List of notifications, if a new Notification has to be added
-     * @returns {Promise<void>}
-     */
-    async function updateNotifications() {
-        notificationsData = notificationsPagination(curNotifications.notifications, curNotifications.page, curNotifications.rows);
-        messageContainer.innerHTML = "";
-        notificationsData.notifications.forEach(function (notification) {
-            displayNotifications(notification);
-        });
-        pageButtons(notificationsData.pages);
-    }
-
-    /**
-     * updates the List of notifications, if a new Notification has to be added
+     * updates the List of sales, if a new sale has to be added / is bought or selled
      * @returns {Promise<void>}
      */
     async function updateSales() {
+        curSales.sales = await fetchSales();
         salesData = salesPagination(curSales.sales, curSales.page, curSales.rows);
         container.innerHTML = "";
         salesData.sales.forEach(function (sale) {
@@ -370,7 +315,7 @@ async function handleShares() {
     }
 
     /**
-     * creates the buttons for scrolling through the pages of the notifications
+     * creates the buttons for scrolling through the "pages" of the sales-table
      * @param pages
      */
     function salesButtons(pages) {
@@ -392,31 +337,6 @@ async function handleShares() {
             pageDiv.appendChild(button);
         }
         container.appendChild(pageDiv);
-    }
-
-    /**
-     * creates the buttons for scrolling through the pages of the notifications
-     * @param pages
-     */
-    function pageButtons(pages) {
-        const pageDiv = document.createElement("div");
-        pageDiv.classList.add("pagination-wrapper");
-
-        for (let page = 1; page <= pages; page++) {
-            const button = document.createElement("button");
-            button.classList.add("page-button");
-            if (page === curNotifications.page) {
-                button.classList.toggle("cur-page");
-            }
-            button.innerText = page.toString();
-
-            button.addEventListener("click", async function () {
-                curNotifications.page = page;
-                await updateNotifications();
-            });
-            pageDiv.appendChild(button);
-        }
-        messageContainer.appendChild(pageDiv);
     }
 
     /**
@@ -460,6 +380,94 @@ async function handleShares() {
             }
             return 0;
         }
+    }
+}
+
+/**
+ * handles and prints the Notifications of the users
+ * @returns {Promise<void>}
+ */
+async function handleNotifications() {
+    const messageContainer = document.querySelector(".notifications-list");
+
+    // state for the current notifications and paging
+    let curNotifications = {
+        'notifications': await fetchNotifications(),
+        'page': 1,
+        'rows': 10
+    };
+
+    await updateNotifications();
+    window.setInterval(updateNotifications, 1000);
+
+    /**
+     * prints the current notification
+     * @param notification
+     * @returns {Promise<void>}
+     */
+    async function displayNotifications(notification) {
+        if (notification !== undefined) {
+            let message = document.createElement("div");
+            message.innerText = notification.uhrzeit + " " + notification.text;
+            messageContainer.appendChild(message);
+        }
+    }
+
+    /**
+     * trims the notifications-list for paging
+     * @param notifications current notifications
+     * @param page current page
+     * @param rows count of rows
+     */
+    function notificationsPagination(notifications, page, rows) {
+        let trimStart = (page - 1) * rows;
+        let trimEnd = trimStart + rows;
+        let trimmedData = notifications.slice(trimStart, trimEnd);
+        let pages = Math.ceil(notifications.length / rows);
+        return {
+            'notifications': trimmedData,
+            'page': curNotifications.page,
+            'pages': pages
+        };
+    }
+
+    /**
+     * updates the List of notifications, if a new Notification has to be added
+     * @returns {Promise<void>}
+     */
+    async function updateNotifications() {
+        curNotifications.notifications = await fetchNotifications();
+        let notificationsData = notificationsPagination(curNotifications.notifications, curNotifications.page, curNotifications.rows);
+        messageContainer.innerHTML = "";
+        notificationsData.notifications.forEach(function (notification) {
+            displayNotifications(notification);
+        });
+        await pageButtons(notificationsData.pages);
+    }
+
+    /**
+     * creates the buttons for scrolling through the pages of the notifications
+     * @param pages
+     */
+    async function pageButtons(pages) {
+        const pageDiv = document.createElement("div");
+        pageDiv.classList.add("pagination-wrapper");
+
+        for (let page = 1; page <= pages; page++) {
+            const button = document.createElement("button");
+            button.classList.add("page-button");
+            if (page === curNotifications.page) {
+                button.classList.toggle("cur-page");
+            }
+            button.innerText = page.toString();
+
+            button.addEventListener("click", async function () {
+                curNotifications.page = page;
+                await updateNotifications();
+            });
+            pageDiv.appendChild(button);
+        }
+        messageContainer.appendChild(pageDiv);
     }
 }
 
